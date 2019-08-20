@@ -1,8 +1,8 @@
-## Dependencies
-- Create a virtual environment in [PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html) or [CLI](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) 
-- Install once by running:
+## Installation
+- (Optional) Create a virtual environment in [PyCharm](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html) or [CLI](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) 
+- Install from pip:
 ```
-pip install -r requirements.txt
+pip install protodf 
 ```
 
 ## Features
