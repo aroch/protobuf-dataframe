@@ -1,3 +1,4 @@
+from collections import Mapping
 from pyspark.sql.types import Row, StringType, StructType, LongType, DoubleType, FloatType, IntegerType, \
     BooleanType, BinaryType, ArrayType
 
@@ -21,12 +22,10 @@ def schema_for(descriptor):
         return None
 
     struct_type = StructType()
-
-    for field_descriptor in descriptor.fields:
+    for field_descriptor in sorted(descriptor.fields, key=lambda x: x.name):
         struct_type.add(
             field_descriptor.name,
             __type_for(field_descriptor),
-            field_descriptor.label != field_descriptor.LABEL_REPEATED and
             field_descriptor.label != field_descriptor.LABEL_REQUIRED
         )
 
@@ -45,19 +44,24 @@ def message_to_row(descriptor, message):
     for field_tuple in message.ListFields():
         field_map[field_tuple[0].name] = field_tuple[1]
 
-    values = []
+    values = {}
+    for field_descriptor in sorted(descriptor.fields, key=lambda x: x.name):
+        values[field_descriptor.name] = __get_field_value(field_descriptor, field_map)
 
-    for field_descriptor in descriptor.fields:
-        if field_descriptor.name in field_map:
-            if field_descriptor.label == field_descriptor.LABEL_REPEATED:
-                values.append([__to_row_data(field_descriptor, data) for data in
-                               field_map[field_descriptor.name]])
-            else:
-                values.append(__to_row_data(field_descriptor, field_map[field_descriptor.name]))
-        else:
-            values.append(None)
+    return Row(**values)
 
-    return Row(*values)
+
+def __get_field_value(field_descriptor, field_map):
+    if field_descriptor.name not in field_map:
+        return None
+
+    if isinstance(field_map[field_descriptor.name], Mapping):
+        return [Row(**{'key': k, 'value': v}) for k, v in field_map[field_descriptor.name].items()]
+
+    if field_descriptor.label == field_descriptor.LABEL_REPEATED:
+        return [__to_row_data(field_descriptor, data) for data in field_map[field_descriptor.name]]
+
+    return __to_row_data(field_descriptor, field_map[field_descriptor.name])
 
 
 def __to_row_data(field_descriptor, data):
