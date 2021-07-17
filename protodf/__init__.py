@@ -56,7 +56,8 @@ def __get_field_value(field_descriptor, field_map):
         return None
 
     if isinstance(field_map[field_descriptor.name], Mapping):
-        return [Row(**{'key': k, 'value': v}) for k, v in field_map[field_descriptor.name].items()]
+        return [Row(**{'key': k, 'value': __to_row_data(field_descriptor.message_type.fields_by_name['value'], v)}) for
+                k, v in field_map[field_descriptor.name].items()]
 
     if field_descriptor.label == field_descriptor.LABEL_REPEATED:
         return [__to_row_data(field_descriptor, data) for data in field_map[field_descriptor.name]]
