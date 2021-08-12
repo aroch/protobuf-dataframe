@@ -2,6 +2,7 @@ from collections import Mapping
 from pyspark.sql.types import Row, StringType, StructType, LongType, DoubleType, FloatType, IntegerType, \
     BooleanType, BinaryType, ArrayType
 
+# https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.descriptor#FieldDescriptor.Type.details
 possible_types = {
     1: lambda t: DoubleType(),
     2: lambda t: FloatType(),
@@ -13,7 +14,8 @@ possible_types = {
     11: lambda t: schema_for(t.message_type),
     12: lambda t: BinaryType(),
     13: lambda t: LongType(),
-    14: lambda t: StringType()  # enum type
+    14: lambda t: StringType(),  # enum type
+    15: lambda t: IntegerType(),
 }
 
 
