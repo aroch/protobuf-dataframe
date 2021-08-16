@@ -1,0 +1,21 @@
+"""
+Contracts for unit testing
+"""
+
+syntax = "proto3";
+
+message ContractWithEnum {
+    string id = 1;
+    repeated NestedContract nested_contracts = 2;
+}
+
+message NestedContract {
+    string id = 1;
+    MyEnum my_enum = 2;
+}
+
+enum MyEnum {
+  First = 0;
+  Second = 1;
+  Fourth = 3;
+}

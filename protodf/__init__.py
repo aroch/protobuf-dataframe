@@ -1,6 +1,11 @@
-from collections import Mapping
+from collections.abc import Mapping
 from pyspark.sql.types import Row, StringType, StructType, StructField, LongType, DoubleType, FloatType, IntegerType, \
     BooleanType, BinaryType, ArrayType
+
+
+class ProtoDfError(Exception):
+    pass
+
 
 # https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.descriptor#FieldDescriptor.Type.details
 possible_types = {
@@ -84,4 +89,4 @@ def __enum_to_row_data(field_descriptor, data):
         enum_value = field_descriptor.enum_type.values_by_number[data]
         return {"name": enum_value.name, "number": enum_value.number}
     except KeyError:
-        raise Exception("Invalid number " + str(data) + " for enum '" + field_descriptor.enum_type.full_name + "'")
+        raise ProtoDfError("Invalid number " + str(data) + " for enum '" + field_descriptor.enum_type.full_name + "'")

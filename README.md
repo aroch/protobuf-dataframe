@@ -48,3 +48,14 @@ df.select("event.field_name", "event.nested_message.field")
 ## Explore the example
 
 In main.py file you would see an example usage for the package 
+
+## Testing
+
+Running unit tests requires the following pip packages
+
+* [`pytest`](https://pytest.org/)
+* [`pyspark`](https://spark.apache.org/docs/latest/api/python/)
+
+They also require the `protoc` command line tool from [`protobuf`](https://github.com/protocolbuffers/protobuf) to generate Python code from ProtoBuf contracts.
+
+From the root folder execute the command `python -m pytest`.
