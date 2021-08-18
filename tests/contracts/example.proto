@@ -1,6 +1,5 @@
-"""
-Contracts for unit testing
-"""
+/* Contracts for unit testing
+ */
 
 syntax = "proto3";
 

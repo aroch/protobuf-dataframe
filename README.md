@@ -51,11 +51,15 @@ In main.py file you would see an example usage for the package
 
 ## Testing
 
-Running unit tests requires the following pip packages
+The easiest way to run unit tests is from the container. Alternatively you'll have to figure out how
+to install Java, Spark, PySpark and more requirements.
 
-* [`pytest`](https://pytest.org/)
-* [`pyspark`](https://spark.apache.org/docs/latest/api/python/)
+You can use `Visual Studio Code` and the `Remote Containers` extensions. This also requires Docker.
 
-They also require the `protoc` command line tool from [`protobuf`](https://github.com/protocolbuffers/protobuf) to generate Python code from ProtoBuf contracts.
+To run unit tests:
 
-From the root folder execute the command `python -m pytest`.
+1. The first time you must install Python package dependencies
+  `pip install -r requirements.txt`
+2. Navigate to `/tests` folder
+2. Run the tests
+  `python -m pytest`

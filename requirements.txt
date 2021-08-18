@@ -1,2 +1,4 @@
+protobuf==3.17.3
 pyspark==2.4.3
 pyspark-stubs==2.4.0.post2
+pytest==6.2.4
